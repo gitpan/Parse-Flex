@@ -1,4 +1,9 @@
+/*
+ Copyright (C) 2003 Ioannis Tambouras <ioannis@earthlink.net> . All rights reserved.
+ LICENSE:  Latest version of GPL. Read licensing terms at  http://www.fsf.org .
+*/
 
+ 
  #define YY_DECL char* yyylex YY_PROTO(( void ))
  #undef yywrap
  int yywrap(void) {  return 1 ;}

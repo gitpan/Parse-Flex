@@ -1,3 +1,9 @@
+/*
+ Copyright (C) 2003 Ioannis Tambouras <ioannis@earthlink.net> . All rights reserved.
+ LICENSE:  Latest version of GPL. Read licensing terms at  http://www.fsf.org .
+*/
+
+
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"

@@ -1,5 +1,10 @@
 Revision history for Perl extension Parse::Flex.
 
+0.02  Fri Nov  8 00:02:05 2003
+	- Removed 2nd of test since it should only work on my machine
+	- Minor changes not worthy to announce
+	- Fixed manifest file
+
 0.01  Thu Nov  6 16:41:35 2003
 	- original version; created by h2xs 1.21 with options
 		-A -P -O Parse::Flex

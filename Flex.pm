@@ -1,20 +1,27 @@
+# Copyright (C) 2003 Ioannis Tambouras <ioannis@earthlink.net> . All rights reserved.
+# LICENSE:  Latest version of GPL. Read licensing terms at  http://www.fsf.org .
+ 
 package Parse::Flex;
 
 use 5.006;
-use strict;
 use warnings;
-use base  qw(Exporter DynaLoader);
+no strict 'refs';
+use base  qw(DynaLoader);
 use Carp;
 
 
 BEGIN { unshift @INC,  $ENV{PWD} }
 
+our @EXPORT   = qw( yyin yyout yylex );
+our $VERSION  = '0.02';
+
+# We walk light, and we do our own importing
+sub import { 
+           *{ caller() . "::$_"}  =   $_[0]->UNIVERAL::can($_)     for @EXPORT;     
+}
 
 
- our %EXPORT_TAGS = ( 'all' => [ qw( ) ] );
-#our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} } );
- our @EXPORT      = qw( yyin yyout yylex );
- our $VERSION     = '0.01';
+
 
 sub manual {
 	return unless my ($soname) = reverse sort  <auto/*so>;

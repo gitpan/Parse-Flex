@@ -1,3 +1,7 @@
+# Copyright (C) 2003 Ioannis Tambouras <ioannis@earthlink.net> . All rights reserved.
+# LICENSE:  Latest version of GPL. Read licensing terms at  http://www.fsf.org .
+ 
+
 use ExtUtils::MakeMaker;
 use ExtUtils::Embed;
 
