@@ -1,0 +1,6 @@
+Revision history for Perl extension Parse::Flex.
+
+0.01  Thu Nov  6 16:41:35 2003
+	- original version; created by h2xs 1.21 with options
+		-A -P -O Parse::Flex
+
