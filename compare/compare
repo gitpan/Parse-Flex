@@ -2,40 +2,35 @@
 ##
 ## Reliable benchmarking is a difficult task.  This particular benchmark 
 ## was contructed the quickest way possible, without regard to issues like
-## caching, scooping, compiler optimization, or typical data. Only a fool
-## will consider that results might guide us to a 'rough' approximation.
-
+## caching, scooping, compiler optimization, or representative data. Only a fool
+## will consider that results might point to a 'rough' approximation.
 
 
 use Benchmark qw( :DEFAULT  cmpthese );
-
+END { unlink 'data'  }
 $SIG{INT} = sub {  unlink 'data' ; exit} ;
 
-my ($debug , $flex, $l, $n, $data, $fh, $ret, @ret) = 0 ;
+my ($debug , $flex, $l, $n, $data, $fh, @tokens, $ret, @ret) = 0 ;
 
 {
 	local $/  = undef;
-	use Fatal qw( open );
+	use Fatal qw( open  close);
 	open $fh, 'snip.txt';
 	$data = <$fh> ;
 	close $fh;
 	open $fh, '>data';
 	print $fh $data   x 850  ;
 	close $fh;
+
+	no warnings;
+	@tokens = ( 
+		qw[ EMAIL \b(?:\w+[.]?)+\w+\@(?:\w+[.])+[a-z]{2,3}\b ],
+		qw( WORD  [a-z]+                                     ),
+		qw( NUM   [0-9]+                                     ),
+		qw( EOL   \n                                         ),
+		qw( ERROR  .                                         ),
+	);
 }
-
-END { unlink 'data'  }
-
-no warnings;
-my @tokens = ( 
-	qw[ EMAIL \b(?:\w+[.]?)+\w+\@(?:\w+[.])+[a-z]{2,3}\b ],
-	qw( WORD  [a-z]+                                     ),
-	qw( NUM   [0-9]+                                     ),
-	qw( EOL   \n                                         ),
-	qw( ERROR  .                                         ),
-);
-
-use warnings;
 
 sub lex { 
         $l->nextis( \$n ) ; 
@@ -61,9 +56,9 @@ sub Parse_Flex {
 }
 
 
-
-
-cmpthese ( 1  , { old=>\&Parse_Lex, new=>\&Parse_Flex} ) ;
+cmpthese ( 1  , { old => \&Parse_Lex, 
+                  new => \&Parse_Flex} 
+	 ) ;
 
 
 __DATA__

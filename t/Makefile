@@ -6,13 +6,12 @@ PERL = /usr/bin/perl
 OPTS     =  -lw -Mblib
 MODULES  =  -Mstrict  -MData::Dumper -MCarp
 
-#  00_default.t  
-#  01_custom.t  
+#  00_default.t  01_custom.t    02_pod.t
 
-#all: 01_custom.t
-all: 00_default.t
+#all: 00_default.t
+all:  02_pod.t
 
-del t*t 0*t:
+t*t 0*t:
 	$(PERL) $(OPTS) $(MODULES) $@
 
 readl:

@@ -24,6 +24,8 @@ sub MY::top_targets {
 		$(AR)  -sr $@ $^
         clean    ::
 		rm -f lex.yy.[oc] libflexer.a
+        test:
+		@- nm -g libflexer.a | grep -q yyylex || echo "Warning: don't overide Perl_yylex" 
 
 };
 

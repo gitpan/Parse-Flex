@@ -1,5 +1,10 @@
 Revision history for Perl extension Parse::Flex.
 
+0.02  Sat Nov  9 11:03:01 2003
+	- Enhanced documentation
+	- Faster loading of module
+	- General cleanup of dist files
+
 0.02  Fri Nov  8 00:02:05 2003
 	- Removed 2nd of test since it should only work on my machine
 	- Minor changes not worthy to announce

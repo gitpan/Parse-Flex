@@ -13,7 +13,7 @@ WriteMakefile(
     NAME		=> 'Parse::Flex',
     VERSION_FROM	=> 'Flex.pm', 
     CCFLAGS             =>  $ccflags,
-    PREREQ_PM		=> { Test::More=>0 }, 
+    PREREQ_PM		=> { Test::More=>0 },
     ABSTRACT_FROM       => 'Flex.pm', 
     AUTHOR              => 'Ioannis Tambouras <ioannis@earthlink.net>',
     NORECURS            =>  0,

@@ -4,8 +4,6 @@ Flex.xs
 MANIFEST
 Makefile.PL
 README
-auto/save/Flex_digits.so
-auto/save/Flex_num.so
 compare/Makefile
 compare/compare
 compare/snip.txt
@@ -13,6 +11,6 @@ src/Makefile.PL
 src/custom.y
 src/default.y
 t/00_default.t
-t/01_custom.t-
+t/02_pod.t
 t/Makefile
 t/data
