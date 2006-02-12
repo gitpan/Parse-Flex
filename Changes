@@ -1,6 +1,11 @@
 Revision history for Perl extension Parse::Flex.
 
-0.02  Sat Nov  9 11:03:01 2003
+0.04  Sat Feb 11 10:13:11 2006
+	- Renamed src/default.c to src/default.l, and made it work
+	  with Flex 2.5, the re-entrant version.
+	- Renamed yyylex() to yylex() .
+
+0.03  Sat Nov  9 11:03:01 2003
 	- Enhanced documentation
 	- Faster loading of module
 	- General cleanup of dist files

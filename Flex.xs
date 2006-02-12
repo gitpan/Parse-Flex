@@ -9,7 +9,7 @@
 #include "XSUB.h"
 
 extern  char*   yytext;
-extern  char*   yyylex(void);
+extern  char*   yylex(void);
 extern  FILE   *yyin, *yyout ;
 
 
@@ -20,7 +20,7 @@ void
 yylex()
    PPCODE:
       char* id = 0;
-      if (id = yyylex() ) {
+      if (id = (char*) yylex() ) {
               XPUSHs (sv_2mortal(newSVpv(id,0)));
               XPUSHs (sv_2mortal(newSVpv( yytext, 0)));
               XSRETURN(2);

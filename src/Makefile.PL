@@ -16,8 +16,8 @@ sub MY::top_targets {
         static  :: libflexer.a
         pure_all:: static
 	CFlAGS  +=   -D_REENTRANT 
-        lex.yy.c : default.y
-		flex -Cf default.y
+        lex.yy.c : default.l
+		flex -Cf default.l
         lex.yy.o ::  lex.yy.c
 		$(CC) -c $(CFLAGS)   $^
         libflexer.a: lex.yy.o

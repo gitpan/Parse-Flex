@@ -1,22 +1,24 @@
 use Test::More;
 use Data::Dumper;
+use Parse::Flex;
 
-# Ensure that we will not been overidden
+# Ensure that we will not be overidden
 BEGIN { chdir qw( .. )  unless $0 =~ /^t/ ;
-	`cd auto && rm -f Flex_*.so` 
+    # `cd auto && rm -f Flex_*.so` 
 }
 
-END { `cd auto && rm -f Flex_num.so` }
+#END { `cd auto && rm -f Flex_num.so` }
 
 
 use Parse::Flex;
-plan tests => 2;
+plan tests => 3;
 
 
 yyin "t/data";
 
-is_deeply [ yylex() ]   =>   [qw( NUM       3) ];
-is_deeply [ yylex() ]   =>   [qw( WORD apples) ];
+is_deeply [ yylex() ]   =>   [qw( WORD     hello) ];
+is_deeply [ yylex() ]   =>   [ ('OTHER',   ' '  ) ];
+is_deeply [ yylex() ]   =>   [qw( EMAIL    ioannis@earthlink.net) ];
 
 
 

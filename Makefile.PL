@@ -8,6 +8,10 @@ use ExtUtils::Embed;
 my $ccflags = ccflags() .  ' -D_REENTRANT ' ;
 
 
+grep { -e "$_/flex" }  split /:/, $ENV{PATH}
+    or print q(You need flex(1) in your $PATH.)  and exit;
+
+
 
 WriteMakefile(
     NAME		=> 'Parse::Flex',

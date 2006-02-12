@@ -11,7 +11,7 @@ use base  qw(DynaLoader);
 
 BEGIN { unshift @INC,  $ENV{PWD} }
 our @EXPORT   = qw( yyin yyout yylex );
-our $VERSION  = '0.03';
+our $VERSION  = '0.04';
 
 
 # We walk light. We do our own importing and autocroaking
@@ -42,7 +42,7 @@ __END__
 
 =head1 NAME
 
-Parse::Flex - The Fastest Lexer on the West      ** Development Release **
+Parse::Flex - The Fastest Lexer in the West 
 
 =head1 SYNOPSIS
 

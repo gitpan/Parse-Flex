@@ -1,16 +1,15 @@
 Changes
-Flex.pm
-Flex.xs
-MANIFEST
-Makefile.PL
-README
-compare/Makefile
 compare/compare
 compare/snip.txt
+Flex.pm
+Flex.xs
+Makefile.PL
+MANIFEST
+README
+src/default.l
 src/Makefile.PL
-src/custom.y
-src/default.y
 t/00_default.t
 t/02_pod.t
-t/Makefile
 t/data
+t/Parse-Flex.t
+META.yml                                 Module meta-data (added by MakeMaker)
