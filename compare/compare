@@ -6,6 +6,7 @@
 ## will consider that results might point to a 'rough' approximation.
 
 
+
 use Benchmark qw( :DEFAULT  cmpthese );
 END { unlink 'data'  }
 $SIG{INT} = sub {  unlink 'data' ; exit} ;

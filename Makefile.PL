@@ -14,23 +14,16 @@ grep { -e "$_/flex" }  split /:/, $ENV{PATH}
 
 
 WriteMakefile(
+    PL_FILES            => { 'src/Makefile.PL' },
     NAME		=> 'Parse::Flex',
-    VERSION_FROM	=> 'Flex.pm', 
+    VERSION_FROM	=> 'lib/Parse/Flex.pm', 
     CCFLAGS             =>  $ccflags,
-    PREREQ_PM		=> { Test::More=>0 },
-    ABSTRACT_FROM       => 'Flex.pm', 
+    PREREQ_PM		=> { 'Scalar::Util' => 0,
+			      XSLoader      => 0,
+			   },
+    ABSTRACT_FROM       => 'lib/Parse/Flex.pm', 
+    EXE_FILES           =>  [ 'script/makelexer.pl' ],
     AUTHOR              => 'Ioannis Tambouras <ioannis@earthlink.net>',
     NORECURS            =>  0,
-    MYEXTLIB            => 'src/libflexer.a',
 );
 
-
-sub MY::postamble {
-     <<'';
-     src/libflexer.a:
-	$(MAKE) -C src  
-     .PHONY: compare 
-     compare: 
-	@$(MAKE) -sC compare
-
-}

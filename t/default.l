@@ -5,13 +5,11 @@
 
 %{ 
 #define YY_DECL char* yylex(void)
-#undef yywrap
-int yywrap(void) {  return 1 ;}
-extern int yylineno;
 %}
 
 %pointer
-%option yylineno
+%option yylineno noyywrap
+ //%option debug perf-report
 
 
 NUM   [0-9]+
@@ -19,12 +17,14 @@ WORD  [a-z][A-Za-z0-9_]+
 EMAIL ({WORD}[.]?)+[@]({WORD}.)+[a-z]{2,3}
 
 %%
+    BEGIN(0);
 {EMAIL}       return "EMAIL"  ;
 {NUM}         return "NUM"    ;
 {WORD}        return "WORD"   ;
 [a-zA-Z]/\    return "CHAR"   ;
-\n            return "EOL"    ;
-.             return "OTHER"  ;
-<<EOF>>       return  NULL    ;
+\n
+[ ]
+. 
+<<EOF>>       return  ""      ;
 %%
 

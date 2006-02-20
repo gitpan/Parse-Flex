@@ -1,5 +1,11 @@
 Revision history for Perl extension Parse::Flex.
 
+0.10  Wed Feb 15 09:21:01 2006
+	- Major changes
+	- New api, new package layout, new docs
+	- Old functionality has completely changed. The new
+	  way is to generate a custom lexer via a script.
+
 0.04  Sat Feb 11 10:13:11 2006
 	- Renamed src/default.c to src/default.l, and made it work
 	  with Flex 2.5, the re-entrant version.
