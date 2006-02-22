@@ -1,25 +1,12 @@
---- #YAML:1.0
-name: Parse-Flex
-version: 0.10
-author:
-  - Ioannis Tambouras <ioannis@yahoo.com>
-abstract: The Fastest Lexer in the West
-license: perl
+# http://module-build.sourceforge.net/META-spec.html
+#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
+name:         Parse-Flex
+version:      0.11
+version_from: lib/Parse/Flex.pm
+installdirs:  site
 requires:
-  Scalar::Util: 0
-  XSLoader: 0
-  perl: 5.6
-recommends:
-  Pod::Checker: 0
-  Test::Distribution: 1.22
-  Test::Exception: 0
-  Test::Pod: 1.20
-  Test::Pod::Coverage: 1.06
-provides:
-  Parse::Flex:
-    file: lib/Parse/Flex.pm
-    version: 0.10
-  Parse::Flex::Generate:
-    file: lib/Parse/Flex/Generate.pm
-    version: 0.01
-generated_by: Module::Build version 0.2611
+    Scalar::Util:                  0
+    XSLoader:                      0
+
+distribution_type: module
+generated_by: ExtUtils::MakeMaker version 6.30

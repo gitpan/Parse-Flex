@@ -1,4 +1,4 @@
-use Test::More tests=>2 ;
+use Test::More tests=> 2 ;
 
 eval "use Test::Pod::Coverage 1.00";
 plan skip_all => "Test::Pod::Coverage 1.00 required for POD coverage" if $@;
@@ -12,14 +12,19 @@ my $trustme = { trustme => [ 	qr/^inlinefiles$/  ,
 			     	qr/^typeme$/       ,
                            ],
               };
-pod_coverage_ok( 'Parse::Flex', $trustme );
+pod_coverage_ok( 'Parse::Flex', { trustme => [ 	
+				qr/^inlinefiles$/  , 
+				qr/^open$/         ,
+                             	qr/^create_push$/  , 
+				qr/^manual$/       , 
+			     	qr/^typeme$/       ,
+]});
 
-$trustme = { trustme => [    	qr/^Usage$/            , 
+pod_coverage_ok( 'Parse::Flex::Generate', { trustme => [    	
+				qr/^Usage$/            , 
 				qr/^check_argv$/       ,
                              	qr/^makefile_content$/ , 
 				qr/^pm_content$/       , 
 			     	qr/^xs_content$/       ,
-                        ],
-              };
+]});
 
-pod_coverage_ok( 'Parse::Flex::Generate', $trustme );

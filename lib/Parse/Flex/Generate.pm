@@ -9,7 +9,7 @@ use strict;
 use base 'Exporter';
 
 
-our $VERSION  = '0.01';
+our $VERSION  = '0.02';
 our @EXPORT   =  qw( pm_content   makefile_content   xs_content 
 		     Usage        check_argv
 );
@@ -42,21 +42,22 @@ sub pm_content  {
 	use XSLoader;
 	XSLoader::load $p;
 	use Parse::Flex;
+	use base 'Exporter';
+
 EOM
 	($msg .= <<'EOM') =~  s/^\t//gm ;	
 	our @EXPORT_OK = qw(
-				append_wrap    print_wrap     yypop_buffer_state
+				yypop_buffer_state            make_yp
 				yyset_debug    yyget_debug
 				yyget_leng     yy_scan_bytes  create_push
 	);
 
 
-	use base 'Exporter';
 	our @EXPORT = qw( 
 				yyout          yyin           yylex
 				yyget_lineno   yyset_lineno   yyset_in
 				walkthrough    gen_walker     yy_scan_string
-				step_walk      yyrestart
+				yyrestart      yapp_new       yapp_parse
 	);
 		
 	sub  create_push {
@@ -86,7 +87,39 @@ EOM
 		control_yyin( shift );
 		sub  { wantarray ? yylex() : [yylex()] }
 	}
-
+	
+sub make_yp {
+        my $grammar =  shift || 'grammar.yp' ;
+        grep { -e "$_/yapp" }  split /:/, $ENV{PATH}
+                or die q(You need yapp(1) in your $PATH.) ;
+        -f $grammar  or die qq("$grammar". $!);
+	
+	(my $makefile = <<"EOM") =~ s/^\t//gm ;
+	MyParser.pm:  $grammar 
+		yapp -m MyParser  \$<
+	EOM
+	open my ($o),  "| make -s -f -";
+	print $o $makefile;
+}
+	
+	
+	sub yapp_new {
+		my $parser = shift || 'MyParser' ;
+		$parser =~   s/\.pm$//;
+		eval "use $parser" ;
+		die qq(Did not find "$parser") if $@;
+		bless \ $parser -> new();
+	}
+	
+	sub yapp_parse {
+		my ($p, $rc, $nerr) =  @_ ;
+		defined $rc and  -f $rc      || die qq("$rc". $!);
+		my $walker = gen_walker ( $rc );
+		my $err = $nerr || sub{ printf qq(Error: got '%s' \n), $_[0]->YYCurval}; 
+		print $$p->YYParse ( yylex => $walker, yyerror => $err)  ;
+	}
+	
+	
 	1;
 EOM
 	$msg;

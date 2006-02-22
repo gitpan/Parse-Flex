@@ -11,7 +11,7 @@ use warnings;
 use strict;
 
 
-our $VERSION  = '0.10';
+our $VERSION  = '0.11';
 our @EXPORT   = qw( typeme );
 #yyget_lineno yyin yylex yyget_lineno  yyget_leng  yyset_debug yyset_in
 
@@ -92,6 +92,15 @@ Almost all Perl parsers expect that your lexer provides
 either a list of two values ( token type and token value), or a reference
 to such list.  Parse::Flex can provides the right response since it 
 consults wantarray context.  
+
+In the particular case when interfacing with Parse::Yapp, you could also
+this interface (if you already have a custom parser) :
+
+ my $p = yapp_new  'MyParser'  ;
+ print $p->yapp_parse(  'data.txt' ) ;
+
+
+ 
 
 
 =head2  Loading the Custom Library
