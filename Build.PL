@@ -7,7 +7,7 @@ grep { -e "$_/flex" }  split /:/, $ENV{PATH}
 my $b= Module::Build->new(
 	module_name        => 'Parse::Flex',
 	dist_author        => 'Ioannis Tambouras <ioannis@yahoo.com>',
-	requires           => { perl           => '5.6',
+	requires           => { perl           => '5.006',
 				'Scalar::Util' =>    0 ,
 				XSLoader       =>    0 ,
 			      },

@@ -8,6 +8,7 @@ my @func = qw(
 	yyget_in
 	yyget_out
 	yylex
+	yylex_int
 	yyin
 	yyout
 	yyget_leng

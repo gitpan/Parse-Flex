@@ -9,7 +9,7 @@ use strict;
 use base 'Exporter';
 
 
-our $VERSION  = '0.02';
+our $VERSION  = '0.03';
 our @EXPORT   =  qw( pm_content   makefile_content   xs_content 
 		     Usage        check_argv
 );
@@ -88,23 +88,23 @@ EOM
 		sub  { wantarray ? yylex() : [yylex()] }
 	}
 	
-sub make_yp {
-        my $grammar =  shift || 'grammar.yp' ;
-        grep { -e "$_/yapp" }  split /:/, $ENV{PATH}
-                or die q(You need yapp(1) in your $PATH.) ;
-        -f $grammar  or die qq("$grammar". $!);
-	
-	(my $makefile = <<"EOM") =~ s/^\t//gm ;
-	MyParser.pm:  $grammar 
-		yapp -m MyParser  \$<
+	sub make_yp {
+		my $grammar =  shift || 'grammar.yp' ;
+		grep { -e "$_/yapp" }  split /:/, $ENV{PATH}
+			or die q(You need yapp(1) in your $PATH.) ;
+		-f $grammar  or die qq("$grammar". $!);
+		
+		(my $makefile = <<"EOM") =~ s/^\t//gm ;
+		MyYapp.pm:  $grammar 
+			yapp -m MyYapp  \$<
 	EOM
-	open my ($o),  "| make -s -f -";
-	print $o $makefile;
-}
+		open my ($o),  "| make -s -f -";
+		print $o $makefile;
+	}
 	
 	
 	sub yapp_new {
-		my $parser = shift || 'MyParser' ;
+		my $parser = shift || 'MyYapp' ;
 		$parser =~   s/\.pm$//;
 		eval "use $parser" ;
 		die qq(Did not find "$parser") if $@;
@@ -112,15 +112,36 @@ sub make_yp {
 	}
 	
 	sub yapp_parse {
-		my ($p, $rc, $nerr) =  @_ ;
+		my ($p, $rc, $debug) =  @_ ;
 		defined $rc and  -f $rc      || die qq("$rc". $!);
 		my $walker = gen_walker ( $rc );
-		my $err = $nerr || sub{ printf qq(Error: got '%s' \n), $_[0]->YYCurval}; 
-		print $$p->YYParse ( yylex => $walker, yyerror => $err)  ;
+		my $err = sub{ printf qq(Error: got '%s' \n), $_[0]->YYCurval}; 
+		print $$p->YYParse ( yylex => $walker, 
+			 	     yyerror => $err,  debug=> $debug||0 ) ;
+	}
+	
+
+	sub pbyacc_new {
+		my ($rc, $parser, $debug) = @_ ;
+		open my ($fd), $rc;
+		($parser = $parser || 'MyByacc')   =~   s/\.pm$// ;
+		eval "use $parser" ;
+		die qq(Did not find "$parser") if $@;
+		
+		my $walker =  gen_walker( $rc);
+		my $err    =  sub{ print qq(Error)  };
+		
+		# you can also enable debuging via $ENV{YYDEBUG} = 1
+		bless \ $parser -> new( $walker, $err, $debug||0 );
+	}
+	
+	sub pbyacc_parse {
+		${$_[0]}->yyparse ;
 	}
 	
 	
 	1;
+
 EOM
 	$msg;
 }
@@ -214,6 +235,17 @@ sub  xs_content {
 	      char* id = 0;
 	      if (id = (char*) yylex() ) {
 		      XPUSHs (sv_2mortal(newSVpv(id,0)));
+		      XPUSHs (sv_2mortal(newSVpv( yytext, 0)));
+		      XSRETURN(2);
+	      }
+	      XSRETURN_EMPTY;
+
+	void
+	yylex_int()
+	   PPCODE:
+	      int id; 
+	      if (id = (int) yylex() ) {
+		      XPUSHs (sv_2mortal(newSViv(id)));
 		      XPUSHs (sv_2mortal(newSVpv( yytext, 0)));
 		      XSRETURN(2);
 	      }

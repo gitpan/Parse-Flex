@@ -1,5 +1,9 @@
 Revision history for Perl extension Parse::Flex.
 
+0.12  Sat Jul 26 22:42:17 2008
+	- Fixed license and meta files
+	- Disabled test 05_default.t
+
 0.11  Tue Feb 21 21:56:48 2006
 	- Added facade functions for Parse::Yapp
 

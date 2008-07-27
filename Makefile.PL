@@ -14,6 +14,7 @@ grep { -e "$_/flex" }  split /:/, $ENV{PATH}
 
 
 WriteMakefile(
+    LICENSE             => 'gpl' ,
     PL_FILES            => { 'src/Makefile.PL' },
     NAME		=> 'Parse::Flex',
     VERSION_FROM	=> 'lib/Parse/Flex.pm', 

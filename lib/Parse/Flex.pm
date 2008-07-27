@@ -11,7 +11,7 @@ use warnings;
 use strict;
 
 
-our $VERSION  = '0.11';
+our $VERSION  = '0.12';
 our @EXPORT   = qw( typeme );
 #yyget_lineno yyin yylex yyget_lineno  yyget_leng  yyset_debug yyset_in
 
